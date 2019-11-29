@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div id="tweet"></div>
+
+<script>
+
+function printData(item, index){
+    $(".wrap").append(
+        "<div class=\"node\">"
+        +"<div class=\"jumbotron\">"
+        +"<h1 class=\"display-4\">"+item.id+"</h1>"
+        +"<p class=\"lead\">"+item.text+"</p>"
+        +"</div>"
+        +"<div>"
+    );
+}
+
+function fetchdata(){
+ $.ajax({
+  url: '/api/tweet',
+  type: 'get',
+  success: function(responses){
+    if(responses.length > 0){
+        $(".wrap").remove();
+        $("#tweet").append("<div class=\"wrap\"></div>");
+        responses.forEach(printData);
+    }
+  }
+ });
+}
+
+$(document).ready(function(){
+ setInterval(fetchdata,20000);
+});
+</script>
+
+
+
+
+
+
+{% endblock %}
